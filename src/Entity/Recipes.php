@@ -34,6 +34,11 @@ class Recipes
      */
     private $ingredients = [];
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="recipes")
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,6 +76,18 @@ class Recipes
     public function setIngredients(array $ingredients): self
     {
         $this->ingredients = $ingredients;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
