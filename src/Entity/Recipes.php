@@ -6,9 +6,12 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\RecipesRepository;
 use Doctrine\ORM\Mapping as ORM;
 Use App\Controller\Recipes\CreateRecipesController;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
+ *      normalizationContext={"groups"={"readRecipes"}},
+ *      denormalizationContext={"groups"={"writeRecipes"}},
  *      collectionOperations={
  *          "get",
  *          "post"={
@@ -16,10 +19,10 @@ Use App\Controller\Recipes\CreateRecipesController;
  *          }
  *      },
  *      itemOperations={
- *          "get",
- *          "delete",
- *          "put",
- *          "patch"
+ *          "get"={"security"="object.getUser() == user"},
+ *          "delete"={"security"="object.getUser() == user"},
+ *          "put"={"security"="object.getUser() == user"},
+ *          "patch"={"security"="object.getUser() == user"}
  *      }  
  * )
  * @ORM\Entity(repositoryClass=RecipesRepository::class)
@@ -35,21 +38,29 @@ class Recipes
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     * @Groups("readRecipes")
+     * @Groups("writeRecipes")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups("readRecipes")
+     * @Groups("writeRecipes")
      */
     private $description;
 
     /**
      * @ORM\Column(type="array")
+     * @Groups("readRecipes")
+     * @Groups("writeRecipes")
      */
     private $ingredients = [];
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="recipes")
+     * @Groups("readRecipes")
+     * @Groups("writeRecipes")
      */
     private $user;
 
