@@ -5,9 +5,23 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\RecipesRepository;
 use Doctrine\ORM\Mapping as ORM;
+Use App\Controller\Recipes\CreateRecipesController;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *      collectionOperations={
+ *          "get",
+ *          "post"={
+ *              "controller"=CreateRecipesController::class,
+ *          }
+ *      },
+ *      itemOperations={
+ *          "get",
+ *          "delete",
+ *          "put",
+ *          "patch"
+ *      }  
+ * )
  * @ORM\Entity(repositoryClass=RecipesRepository::class)
  */
 class Recipes
@@ -20,7 +34,7 @@ class Recipes
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $title;
 
