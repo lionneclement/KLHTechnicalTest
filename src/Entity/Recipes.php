@@ -15,7 +15,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *      normalizationContext={"groups"={"readRecipes"}},
  *      denormalizationContext={"groups"={"writeRecipes"}},
  *      collectionOperations={
- *          "get",
+ *          "get"={
+ *              "security"="is_granted('my_recipes', object)"
+ *          },
  *          "post"={
  *              "controller"=CreateRecipesController::class,
  *          }
