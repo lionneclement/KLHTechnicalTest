@@ -7,6 +7,8 @@ use App\Repository\RecipesRepository;
 use Doctrine\ORM\Mapping as ORM;
 Use App\Controller\Recipes\CreateRecipesController;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ApiResource(
@@ -25,6 +27,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "patch"={"security"="object.getUser() == user"}
  *      }  
  * )
+ * @ApiFilter(SearchFilter::class, properties={"user": "exact"})
  * @ORM\Entity(repositoryClass=RecipesRepository::class)
  */
 class Recipes
