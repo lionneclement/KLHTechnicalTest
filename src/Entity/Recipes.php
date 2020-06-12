@@ -16,17 +16,17 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *      denormalizationContext={"groups"={"writeRecipes"}},
  *      collectionOperations={
  *          "get"={
- *              "security"="is_granted('my_recipes', object)"
+ *              "security"="is_granted('ROLE_ADMIN') or is_granted('my_recipes', object)"
  *          },
  *          "post"={
  *              "controller"=CreateRecipesController::class,
  *          }
  *      },
  *      itemOperations={
- *          "get"={"security"="object.getUser() == user"},
- *          "delete"={"security"="object.getUser() == user"},
- *          "put"={"security"="object.getUser() == user"},
- *          "patch"={"security"="object.getUser() == user"}
+ *          "get"={"security"="is_granted('ROLE_ADMIN') or object.getUser() == user"},
+ *          "delete"={"security"="is_granted('ROLE_ADMIN') or object.getUser() == user"},
+ *          "put"={"security"="is_granted('ROLE_ADMIN') or object.getUser() == user"},
+ *          "patch"={"security"="is_granted('ROLE_ADMIN') or object.getUser() == user"}
  *      }  
  * )
  * @ApiFilter(SearchFilter::class, properties={"user": "exact"})

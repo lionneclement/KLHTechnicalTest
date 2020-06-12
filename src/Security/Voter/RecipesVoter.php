@@ -40,11 +40,6 @@ class RecipesVoter extends Voter
         if (!$user instanceof UserInterface) {
             return false;
         }
-        
-        if ($this->security->isGranted('ROLE_ADMIN')) {
-            return true;
-        }
-
         foreach ($subject as $value) {
             if (!($value->getUser() == $user)) {
                 return false;
